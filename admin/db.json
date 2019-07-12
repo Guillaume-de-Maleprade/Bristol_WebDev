@@ -1,0 +1,5 @@
+{
+    "dsn":"mysql:host=localhost;dbname=dummy;charset=UTF8",
+    "username":"root",
+    "password":""
+}
