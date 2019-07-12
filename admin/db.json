@@ -1,5 +1,5 @@
 {
-    "dsn":"mysql:host=localhost;dbname=dummy;charset=UTF8",
+    "dsn":"mysql:host=localhost;dbname=webdev_bristol;charset=UTF8",
     "username":"root",
     "password":""
 }
