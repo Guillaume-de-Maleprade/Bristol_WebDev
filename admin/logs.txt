@@ -1,4 +1,0 @@
-username: Durand.Luc
-mail: Durand.Luc@uwe.ac.uk
-username: Luc.Loc
-mail: Luc.Loc@uwe.ac.uk
