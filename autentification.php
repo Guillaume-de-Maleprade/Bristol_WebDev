@@ -12,8 +12,6 @@
 */
 //Appel du fichier contenant les variables
 require_once('admin/db_connect.php');
-require_once('fonction.php');
-require_once('utilisateur.php');
 
 
 /*
@@ -31,12 +29,15 @@ while(isset($login_utilisateurs[$i]))
 	if($login_utilisateurs[$i] == htmlspecialchars($_POST["login"]))
 	{
 		//Si le password associé au pseudo est correct ?
-		if(GetPasswordUtilisateur($login_utilisateurs[$i]) == htmlspecialchars($_POST["password"]))
+		if(password_verify(htmlspecialchars($_POST["password"]),GetPasswordUtilisateur($login_utilisateurs[$i])))
 		{
+			session_start()
 			//Si le pseudo est correct alors connexion, assignation des valeurs de $_SESSION['login'] ainsi que $_SESSION['password'] et $_SESSION['id']. Enfin redirection vers choix.php
-			$utilisateur = new Utilisateur(GetIdUtilisateur($login_utilisateurs[$i]));
-			InfoUserIntoSession($utilisateur -> getId(), $utilisateur -> getLogin(), $utilisateur -> getProf());
-			header("Location: choixQuestionnaire.php");
+			$_SESSION['username']=htmlspecialchars($_POST["login"]);
+       		$_SESSION['role']=GetRoleUtilisateur($login_utilisateurs[$i]);
+
+
+			header("Location: suite.php");
 			exit;
 		}
 	}
