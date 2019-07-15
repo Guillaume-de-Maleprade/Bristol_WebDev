@@ -6,37 +6,29 @@
 *Si MDP et/ou ID incorrects: Redirection vers la page Index.php avec l'affichage d'un message d'erreur
 */
 
-
+require_once('Class/Login.php');
 
 /*
 *Réaction en fonction des données reçues.
-*Le pseudo existe, alors on vérifie le mot de passe.
 */
 
-// On récupère tout le contenu de la table login/username
-$login_utilisateurs = GetTousLesUtilisateurs();
+//Si le login transmit en $_POST["login"] existe ? Avec protection par htmlspecialchars.
 
-// On vérifie sur dans toute la base de donnée de l'utilisateur
-$i = 0;
-while(isset($login_utilisateurs[$i]))
-{
-	//Si le login transmit en $_POST["login"] existe ? Avec protection par htmlspecialchars.
-	if($login_utilisateurs[$i] == htmlspecialchars($_POST["login"]))
-	{
-		//Si le password associé au pseudo est correct ?
-		if(password_verify(htmlspecialchars($_POST["password"]),GetPasswordUtilisateur($login_utilisateurs[$i])))
-		{
-			session_start();
-			//Si le pseudo est correct alors connexion, assignation des valeurs de $_SESSION['username'] ainsi que $_SESSION['role']. Enfin redirection
-			$_SESSION['username']=htmlspecialchars($_POST["login"]);
-       		$_SESSION['role']=GetRoleUtilisateur($login_utilisateurs[$i]);
+if(Login::readByUserName(htmlspecialchars($_POST["login"]))){
+	$login=Login::readByUserName(htmlspecialchars($_POST["login"]));
+
+	//Si le password associé au pseudo est correct ? Avec protection par htmlspecialchars.
+	if(password_verify(htmlspecialchars($_POST["password"]),$login->password)){
+
+		session_start();
+		//Si le pseudo est correct alors connexion, assignation des valeurs de $_SESSION['username'] ainsi que $_SESSION['role']. Enfin redirection
+		$_SESSION['username']=$login->username;
+  		$_SESSION['role']=$login->role;
 
 
-			header("Location: suite.php");
-			exit;
-		}
+		header("Location: suite.php");
+		exit;
 	}
-	$i++;
 }
 
 /*

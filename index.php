@@ -45,4 +45,4 @@ require_once('View.php');
 
 $array = ['message'=>$message];
 
-View::render('login.html', $array);
+View::render('templates/login.html', $array);
