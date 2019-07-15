@@ -4,7 +4,6 @@ $db = NULL;
 
 $json = file_get_contents("db.json");
 $config = json_decode($json, true);
-
 try {
     $dbname = $config['dbname'];
     $host = $config['host'];
@@ -17,4 +16,3 @@ try {
     die("Connection failed " . $e->getMessage());
 }
 $GLOBALS['db'] = $db;
-
