@@ -1,6 +1,6 @@
 <?php
 
-require 'db_connect.php';
+require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/admin/db_connect.php');
 
 class Student
 {
@@ -39,15 +39,32 @@ class Student
         $db = $GLOBALS['db'];
         $username = $db->quote($username);
         $query = "SELECT * FROM student WHERE username = $username";
-        $result = $db->query($query);
-        if ($result == false) {
-            exit("erreur PDO:query($query)");
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
         }
+        $stArray = [];
+        foreach($array as $object) {
+            $student = new Student($object['mail'], $object['name'], $object['firstname'], $object['address'], $object['username']);
+            array_push($stArray, $student);
+        }
+        return $stArray;
+    }
 
-        $object = $result->fetchObject();
-        if($object == FALSE) return NULL;
-        $student = new Student($object->mail, $object->name, $object->firstname, $object->address, $object->username);
-        return $student;
+    public static function readAll(){
+        $db = $GLOBALS['db'];
+
+        $query = "SELECT * FROM student WHERE 1";
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
+        }
+        $stArray = [];
+        foreach($array as $object) {
+            $student = new Student($object['mail'], $object['name'], $object['firstname'], $object['address'], $object['username']);
+            array_push($stArray, $student);
+        }
+        return $stArray;
     }
 
     public static function readByNames($firstname, $name)
@@ -56,15 +73,16 @@ class Student
         $firstname = $db->quote($firstname);
         $name = $db->quote($name);
         $query = "SELECT * FROM student WHERE name = $name AND firstname = $firstname";
-        $result = $db->query($query);
-        if ($result == false) {
-            exit("erreur PDO:query($query)");
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
         }
-
-        $object = $result->fetchObject();
-        if($object == FALSE) return NULL;
-        $student = new Student($object->mail, $object->name, $object->firstname, $object->address, $object->username);
-        return $student;
+        $stArray = [];
+        foreach($array as $object) {
+            $student = new Student($object['mail'], $object['name'], $object['firstname'], $object['address'], $object['username']);
+            array_push($stArray, $student);
+        }
+        return $stArray;
     }
 
     // UPDATE
