@@ -1,5 +1,6 @@
 <?php
-require_once('../admin/db_connect.php');
+
+require 'db_connect.php';
 
 class Student
 {
@@ -22,10 +23,11 @@ class Student
     // CREATE
     public function insert()
     {
-        //$db = new DB();
         try {
-            $query = "INSERT INTO student (username, mail, name, firstname, address) VALUES ({$this->username}, {$this->mail}, {$this->name}, {$this->firstname}, {$this->address})";
-            $req = $db->query($query);
+            $db = $GLOBALS['db'];
+            $query = "INSERT INTO student (username, mail, name, firstname, address) VALUES (?,?,?,?,?)";
+            $stmt = $db->prepare($query);
+            $stmt->execute([$this->username, $this->mail, $this->name, $this->firstname, $this->address]);
         } catch (PDOException $e) {
             die($e);
         }
@@ -34,7 +36,7 @@ class Student
     // READ
     public static function readByUserName($username)
     {
-        //$db = new DB();
+        $db = $GLOBALS['db'];
         $username = $db->quote($username);
         $query = "SELECT * FROM student WHERE username = $username";
         $result = $db->query($query);
@@ -43,14 +45,15 @@ class Student
         }
 
         $object = $result->fetchObject();
+        if($object == FALSE) return NULL;
         $student = new Student($object->mail, $object->name, $object->firstname, $object->address, $object->username);
         return $student;
     }
 
     public static function readByNames($firstname, $name)
     {
-        //$db = new DB();
-        $firstname = $db->db->quote($firstname);
+        $db = $GLOBALS['db'];
+        $firstname = $db->quote($firstname);
         $name = $db->quote($name);
         $query = "SELECT * FROM student WHERE name = $name AND firstname = $firstname";
         $result = $db->query($query);
@@ -59,6 +62,7 @@ class Student
         }
 
         $object = $result->fetchObject();
+        if($object == FALSE) return NULL;
         $student = new Student($object->mail, $object->name, $object->firstname, $object->address, $object->username);
         return $student;
     }
@@ -66,13 +70,14 @@ class Student
     // UPDATE
     public function update()
     {
-        //$db = new DB();
+        $db = $GLOBALS['db'];
         $query = "UPDATE student SET username = {$this->username}, mail = {$this->mail}, name = {$this->name}, firstname = {$this->firstname}, {address = $this->address}";
         $db->exec($query);
     }
 
     // DELETE
     public static function delete($username){
+        $db = $GLOBALS['db'];
         $query = "DELETE FROM student WHERE username = $username";
         $db->exec($query);
     }

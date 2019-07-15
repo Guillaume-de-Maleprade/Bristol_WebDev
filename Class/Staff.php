@@ -33,6 +33,7 @@ class Staff
     // CREATE
     public function insert()
     {
+        $db = $GLOBALS['db'];
         $query = "INSERT INTO staff (username,mail,name,firstname) VALUES (?,?,?,?)";
         $req = $db->prepare($query);
         $req->execute(array($this->username, $this->mail, $this->name, $this->firstname));
@@ -40,6 +41,7 @@ class Staff
     // READ
     public static function readByUserName($userName)
     {
+        $db = $GLOBALS['db'];
         $query = "SELECT * FROM staff WHERE username = $userName";
         $result = $db->query($query);
         if($result==false) return NULL;
@@ -53,10 +55,11 @@ class Staff
     }
     // DELETE
     public static function delete($username){
+        $db = $GLOBALS['db'];
         $query  ="DELETE FROM staff WHERE username = $username";
         $result = $db->query($query);
         if($result == false){
-            $errorMsg = $bdd->errorInfo()[2];
+            $errorMsg = $db->errorInfo()[2];
             exit("PDO:query('$query') : $errorMsg");
         }else{
             echo("Staff deleted");
