@@ -6,7 +6,6 @@
 *Si MDP et/ou ID incorrects: Redirection vers la page Index.php avec l'affichage d'un message d'erreur
 */
 
-require_once('admin/db_connect.php');
 
 
 /*
