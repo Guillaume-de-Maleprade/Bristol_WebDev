@@ -1,5 +1,6 @@
 {
-    "dsn":"mysql:host=localhost;dbname=dummy;charset=UTF8",
+    "dbname" : "bristol_webdev",
+    "host":"localhost",
     "username":"root",
     "password":""
 }

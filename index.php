@@ -1,7 +1,6 @@
 <?php
 
 require_once('View.php');
-require_once('admin/db_connect.php');
 
 /*
 *Fichier index.php Base du site
