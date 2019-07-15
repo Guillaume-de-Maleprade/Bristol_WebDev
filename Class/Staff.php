@@ -52,9 +52,9 @@ class Staff
 
     }
     // DELETE
-    public function delete($username){
+    public static function delete($username){
         $query  ="DELETE FROM staff WHERE username = $username";
-        $result = $bdd->query($query);
+        $result = $db->query($query);
         if($result == false){
             $errorMsg = $bdd->errorInfo()[2];
             exit("PDO:query('$query') : $errorMsg");

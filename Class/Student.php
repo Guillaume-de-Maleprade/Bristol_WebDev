@@ -1,5 +1,5 @@
 <?php
-require('../admin/db_connect.php');
+require_once('../admin/db_connect.php');
 
 class Student
 {
@@ -72,4 +72,8 @@ class Student
     }
 
     // DELETE
+    public static function delete($username){
+        $query = "DELETE FROM student WHERE username = $username";
+        $db->exec($query);
+    }
 }
