@@ -16,3 +16,5 @@ username: crepin.lea
 mail: crepin.lea@uwe.ac.uk
 username: de-maleprade.guillaume
 mail: de-maleprade.guillaume@uwe.ac.uk
+username: corn.adrien
+mail: corn.adrien@uwe.ac.uk
