@@ -1,7 +1,7 @@
 <?php
 class View{
     static function render($templateName, $array){
-        $template = file_get_contents("templates/$templateName");
+        $template = file_get_contents("$templateName");
         foreach($array as $key=>$value){
             $template = str_replace("{{{$key}}}", $value, $template);
         }

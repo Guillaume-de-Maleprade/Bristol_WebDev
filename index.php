@@ -1,6 +1,6 @@
 <?php
 
-require_once('View.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
 /*
 *Fichier index.php Base du site

@@ -1,6 +1,6 @@
 <?php
 
-require 'db_connect.php';
+require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/config/db_connect.php');
 
 class Login
 {

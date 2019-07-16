@@ -6,7 +6,7 @@
 *Si MDP et/ou ID incorrects: Redirection vers la page Index.php avec l'affichage d'un message d'erreur
 */
 
-require_once('Class/Login.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/Login.php');
 
 /*
 *Réaction en fonction des données reçues.
