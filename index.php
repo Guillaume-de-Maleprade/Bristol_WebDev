@@ -31,9 +31,13 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
 			if (isset($_GET['connexion']))
 			{
-				if($_GET['connexion'] == 'ErreurId')
+				if($_GET['connexion'] == 'ErreurPass')
 				{
-					$message='Mot de passe incorrect.';
+					$message='Wrong Password.';
+				}
+				if($_GET['connexion'] == 'ErreurUser')
+				{
+					$message='Invalid Username.';
 				}
 			}
 			else

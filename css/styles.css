@@ -259,12 +259,13 @@ input.buttonBlue:hover { background: #357bd8; }
 
 
 
-footer { text-align: center; }
+footer { text-align: center;}
 
 footer p {
  color: #888;
  font-size: 13px;
  letter-spacing: .4px;
+ text-align: center;
 }
 
 footer a {

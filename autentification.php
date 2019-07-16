@@ -29,10 +29,16 @@ if(Login::readByUserName(htmlspecialchars($_POST["login"]))){
 		header("Location: suite.php");
 		exit;
 	}
+	/*
+	*Si le password associé au pseudo est incorrect alors on renvoit l'utilisateur sur la page index.php en passant un paramètre d'erreur de connection "ErreurPass" dans le lien.
+	*/
+	header("Location: index.php?connexion=ErreurPass");
+	exit;
 }
 
 /*
-*Si le password associé au pseudo est incorrect alors on renvoit l'utilisateur sur la page index.php en passant un paramètre d'erreur de connection "ErreurId" dans le lien.
+*Si le username associé est invalide alors on renvoit l'utilisateur sur la page index.php en passant un paramètre d'erreur de connection "ErreurUser" dans le lien.
 */
-header("Location: index.php?connexion=ErreurId");
+header("Location: index.php?connexion=ErreurUser");
+
 ?>
