@@ -21,14 +21,14 @@ if (!empty($_GET)) {
             break;
 
         case 'student_list':
-            /*$content = file_get_contents("templates/student_list.html");
+            /*$content = file_get_contents("templates/staff_list.html");
             $student = ['content' => $content, 'student_button' => $current, 'title' => "Student List", 'student_active' => 'active'];
             View::render('templates/base.html', $student);*/
             header('Location: staff/student_list.php');
             break;
 
         case 'student_add':
-            $content = file_get_contents("templates/student_add.html");
+            $content = file_get_contents("templates/staff_add.html");
             $student = ['content' => $content, 'student_button' => $current, 'title' => "Student Add", 'student_active' => 'active'];
             View::render('templates/base.html', $student);
             break;

@@ -9,11 +9,17 @@ $stArray = Student::readAll();
 $content = "";
 
 foreach($stArray as $student){
-    $row = View::getTemplate('student_row.html', [ $student->firstname, $student->name, $student->username, $student->mail, $student->address]);
+    $row = View::getTemplate('staff/student_row.html', [
+        'firstname'=>$student->firstname,
+        'name'=>$student->name,
+        'username'=>$student->username,
+        'mail'=>$student->mail,
+        'address'=>$student->address
+    ]);
     $content .= $row;
 }
 
-$content = View::getTemplate('student_list.html', [ 'content'=> $content ]);
+$content = View::getTemplate('staff/student_list.html', [ 'content'=> $content ]);
 
 $add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/staff.php?page=student_add'>Add</a>";
 $content .= $add_link;
