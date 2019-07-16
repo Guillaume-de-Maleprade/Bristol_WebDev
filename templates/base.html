@@ -13,6 +13,25 @@
     <title>{{title}}</title>
 </head>
 <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                    <li class="nav-item {{home_active}}">
+                      <a class="nav-link" href="/Bristol_WebDev">Home {{home_button}}</span></a>
+                    </li>
+                    <li class="nav-item {{staff_active}}">
+                      <a class="nav-link" href="/Bristol_WebDev/staff.php?page=staff_list">Staff {{staff_button}}</a>
+                    </li>
+                    <li class="nav-item {{student_active}}">
+                      <a class="nav-link" href="/Bristol_WebDev/staff.php?page=student_list">Students {{student_button}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
     <div class="container">
         {{content}}
     </div>

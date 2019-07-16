@@ -56,7 +56,7 @@ CREATE TABLE `enrollment` (
 
 CREATE TABLE `login` (
   `username` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(60) CHARACTER SET utf8 NOT NULL,
   `role` varchar(30) CHARACTER SET utf8 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
