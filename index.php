@@ -1,6 +1,6 @@
 <?php
 
-require_once('View.php');
+require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
 if (!empty($_GET)) {
     switch ($_GET['page']) {
