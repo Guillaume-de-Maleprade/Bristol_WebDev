@@ -1,4 +1,0 @@
-AuthName "Page d'administration protégée"
-AuthType Basic
-AuthUserFile "C:\xampp\htdocs\Bristol_WebDev\admin\.htpasswd"
-Require valid-user
