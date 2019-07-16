@@ -25,8 +25,14 @@ if(Login::readByUserName(htmlspecialchars($_POST["login"]))){
 		$_SESSION['username']=$login->username;
   		$_SESSION['role']=$login->role;
 
+        switch ($_SESSION['role']){
+            case 'Staff':
+                header("Location: staff.php");
+            case 'Student':
+                header("Location: student.php");
 
-		header("Location: suite.php");
+        }
+
 		exit;
 	}
 	/*

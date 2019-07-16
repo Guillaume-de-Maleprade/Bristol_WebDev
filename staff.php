@@ -5,7 +5,7 @@ $current = '<span class="sr-only">(current)';
 
 // Add staff in database
 
-if (!empty($_GET)) {
+if (!empty($_GET) && $_SESSION['role']=='Staff') {
     switch ($_GET['page']) {
         case 'staff_list':
             /*$content = file_get_contents("templates/staff_list.html");
@@ -37,6 +37,6 @@ if (!empty($_GET)) {
             View::render('base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
             break;
     }
-} else {
-    View::render('base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
+}else{
+    header('Location: /Bristol_WebDev');
 }
