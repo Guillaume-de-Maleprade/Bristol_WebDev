@@ -49,4 +49,4 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
 $array = ['message'=>$message];
 
-View::render('templates/login.html', $array);
+View::render('login.html', $array);

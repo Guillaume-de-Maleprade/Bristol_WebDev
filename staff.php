@@ -15,7 +15,7 @@ if (!empty($_GET)) {
             break;
 
         case 'staff_add':
-            $content = file_get_contents("templates/staff_add.html");
+            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/staff_add.html");
             $staff = ['content' => $content, 'staff_button' => $current, 'title' => "Staff Add", 'staff_active' => 'active'];
             View::render('base.html', $staff);
             break;
@@ -28,9 +28,9 @@ if (!empty($_GET)) {
             break;
 
         case 'student_add':
-            $content = file_get_contents("templates/staff_add.html");
+            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/staff_add.html");
             $student = ['content' => $content, 'student_button' => $current, 'title' => "Student Add", 'student_active' => 'active'];
-            View::render('templates/base.html', $student);
+            View::render('base.html', $student);
             break;
 
         default:
@@ -38,5 +38,5 @@ if (!empty($_GET)) {
             break;
     }
 } else {
-    View::render('templates/base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
+    View::render('base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
 }
