@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
+=======
+require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
+>>>>>>> Guillaume_save
 
 /*
 *Fichier index.php Base du site
