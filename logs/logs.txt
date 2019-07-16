@@ -18,3 +18,5 @@ username: de-maleprade.guillaume
 mail: de-maleprade.guillaume@uwe.ac.uk
 username: corn.adrien
 mail: corn.adrien@uwe.ac.uk
+username: eleve.eleve
+mail: eleve.eleve@uwe.ac.uk
