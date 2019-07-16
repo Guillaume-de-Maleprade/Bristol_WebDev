@@ -32,9 +32,9 @@ $content = "<table class=\"table table-striped\">"
             ."</tbody>"
         ."</table>";
 
-$add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/admin/?page=staff_add'>Add</a>";
+$add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/staff.php?page=staff_add'>Add</a>";
 $content .= $add_link;
 
 $staffs = ['content' => $content, 'student_button' => '<span class="sr-only">(current)', 'title' => "Staff List", 'staff_active' => 'active'];
 
-View::render('templates/base.html', $staffs);
+View::render('base.html', $staffs);

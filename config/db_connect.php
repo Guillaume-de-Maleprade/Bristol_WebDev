@@ -2,7 +2,7 @@
 
 $db = NULL;
 
-$json = file_get_contents("db.json");
+$json = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/config/db.json");
 $config = json_decode($json, true);
 
 try {

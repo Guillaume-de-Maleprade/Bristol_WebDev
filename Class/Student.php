@@ -1,6 +1,6 @@
 <?php
 
-require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/admin/db_connect.php');
+require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/config/db_connect.php');
 
 class Student
 {

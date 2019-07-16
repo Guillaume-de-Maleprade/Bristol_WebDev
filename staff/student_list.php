@@ -9,34 +9,15 @@ $stArray = Student::readAll();
 $content = "";
 
 foreach($stArray as $student){
-    $row = "<tr>"
-            ."<td>$student->firstname</td>"
-            ."<td>$student->name</td>"
-            ."<td>$student->username</td>"
-            ."<td>$student->mail</td>"
-            ."<td>$student->address</td>"
-        ."</tr>";
+    $row = View::getTemplate('student_row.html', [ $student->firstname, $student->name, $student->username, $student->mail, $student->address]);
     $content .= $row;
 }
 
-$content = "<table class=\"table table-striped\">"
-            ."<thead>"
-                ."<tr>"
-                    ."<th scope=\"col\">First Name</th>"
-                    ."<th scope=\"col\">Name</th>"
-                    ."<th scope=\"col\">Username</th>"
-                    ."<th scope=\"col\">Mail</th>"
-                    ."<th scope=\"col\">Address</th>"
-                ."</tr>"
-            ."</thead>"
-            ."<tbody>"
-                .$content
-            ."</tbody>"
-        ."</table>";
+$content = View::getTemplate('student_list.html', [ 'content'=> $content ]);
 
-$add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/admin/?page=student_add'>Add</a>";
+$add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/staff.php?page=student_add'>Add</a>";
 $content .= $add_link;
 
 $students = ['content' => $content, 'student_button' => '<span class="sr-only">(current)', 'title' => "Student List", 'student_active' => 'active'];
 
-View::render('templates/base.html', $students);
+View::render('base.html', $students);
