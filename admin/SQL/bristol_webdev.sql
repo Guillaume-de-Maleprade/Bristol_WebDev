@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 17 juil. 2019 à 14:04
+-- Généré le :  mer. 17 juil. 2019 à 17:10
 -- Version du serveur :  10.3.15-MariaDB
 -- Version de PHP :  7.3.6
 
@@ -142,10 +142,10 @@ CREATE TABLE `type` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Structure de la table `people`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `people` (
   `id` int(11) NOT NULL,
   `username` varchar(60) NOT NULL,
   `mail` varchar(60) NOT NULL,
@@ -208,8 +208,8 @@ ALTER TABLE `room`
 --
 ALTER TABLE `room_booking`
   ADD PRIMARY KEY (`date`,`room`),
-  ADD KEY `book_component` (`component`),
-  ADD KEY `book_room` (`room`);
+  ADD KEY `book_room` (`room`),
+  ADD KEY `book_component` (`component`);
 
 --
 -- Index pour la table `teaching`
@@ -226,13 +226,13 @@ ALTER TABLE `type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `user`
+-- Index pour la table `people`
 --
-ALTER TABLE `user`
+ALTER TABLE `people`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_mail` (`mail`),
   ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `user_role` (`role`);
+  ADD UNIQUE KEY `people_mail` (`mail`) USING BTREE,
+  ADD KEY `people_role` (`role`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -287,9 +287,9 @@ ALTER TABLE `type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT pour la table `user`
+-- AUTO_INCREMENT pour la table `people`
 --
-ALTER TABLE `user`
+ALTER TABLE `people`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -308,19 +308,20 @@ ALTER TABLE `component`
 --
 ALTER TABLE `enrollment`
   ADD CONSTRAINT `enrollment_module` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `enrollment_student` FOREIGN KEY (`student`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `enrollment_student` FOREIGN KEY (`student`) REFERENCES `people` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `marking`
 --
 ALTER TABLE `marking`
   ADD CONSTRAINT `marking_component` FOREIGN KEY (`component`) REFERENCES `component` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `marking_student` FOREIGN KEY (`student`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `marking_student` FOREIGN KEY (`student`) REFERENCES `people` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `room_booking`
 --
 ALTER TABLE `room_booking`
+  ADD CONSTRAINT `book_component` FOREIGN KEY (`component`) REFERENCES `component` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `book_room` FOREIGN KEY (`room`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -328,13 +329,13 @@ ALTER TABLE `room_booking`
 --
 ALTER TABLE `teaching`
   ADD CONSTRAINT `teaching_module` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `teaching_staff` FOREIGN KEY (`staff`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `teaching_staff` FOREIGN KEY (`staff`) REFERENCES `people` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `user`
+-- Contraintes pour la table `people`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_role` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `people`
+  ADD CONSTRAINT `people_role` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

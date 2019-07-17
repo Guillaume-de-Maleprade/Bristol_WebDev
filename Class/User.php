@@ -32,7 +32,7 @@ class User
         try {
             $password = newPassword();
             $db = $GLOBALS['db'];
-            $query = "INSERT INTO user (username, mail, name, firstname, address, role, password) VALUES (?,?,?,?,?,?,?)";
+            $query = "INSERT INTO people (username, mail, name, firstname, address, role, password) VALUES (?,?,?,?,?,?,?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$this->username, $this->mail, $this->name, $this->firstname, $this->address, $this->role, $this->password]);
             file_put_contents($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/logs/password.txt', $this->username.' - '.$password . PHP_EOL, FILE_APPEND | LOCK_EX);
@@ -60,7 +60,7 @@ class User
     {
         $db = $GLOBALS['db'];
         $username = $db->quote($username);
-        $query = "SELECT * FROM user WHERE username = $username";
+        $query = "SELECT * FROM people WHERE username = $username";
         $array = $db->query($query);
         if ($array == false) {
             exit("Error PDO:query($query)");
@@ -77,7 +77,7 @@ class User
     {
         $db = $GLOBALS['db'];
 
-        $query = "SELECT * FROM user WHERE role = $role";
+        $query = "SELECT * FROM people WHERE role = $role";
         $array = $db->query($query);
         if ($array == false) {
             exit("Error PDO:query($query)");
@@ -128,7 +128,7 @@ class User
         $db = $GLOBALS['db'];
         $firstname = $db->quote($firstname);
         $name = $db->quote($name);
-        $query = "SELECT * FROM user WHERE name = $name AND firstname = $firstname";
+        $query = "SELECT * FROM people WHERE name = $name AND firstname = $firstname";
         $array = $db->query($query);
         if ($array == false) {
             exit("Error PDO:query($query)");
@@ -145,7 +145,7 @@ class User
     public function update()
     {
         $db = $GLOBALS['db'];
-        $query = "UPDATE user SET username = {$this->username}, mail = {$this->mail}, name = {$this->name}, firstname = {$this->firstname}, address ={$this->address}, role ={$this->role}";
+        $query = "UPDATE people SET username = {$this->username}, mail = {$this->mail}, name = {$this->name}, firstname = {$this->firstname}, address ={$this->address}, role ={$this->role}";
         $db->exec($query);
     }
 
@@ -153,7 +153,7 @@ class User
     public static function delete($username)
     {
         $db = $GLOBALS['db'];
-        $query = "DELETE FROM user WHERE username = $username";
+        $query = "DELETE FROM people WHERE username = $username";
         $db->exec($query);
     }
 }

@@ -15,7 +15,7 @@ if (!empty($_GET) && $_SESSION['role']=='Staff') {
             break;
 
         case 'staff_add':
-            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/staff_add.html");
+            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/user_add.html");
             $staff = ['content' => $content, 'staff_button' => $current, 'title' => "Staff Add", 'staff_active' => 'active'];
             View::render('base.html', $staff);
             break;
@@ -28,7 +28,7 @@ if (!empty($_GET) && $_SESSION['role']=='Staff') {
             break;
 
         case 'student_add':
-            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/staff_add.html");
+            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/user_add.html");
             $student = ['content' => $content, 'student_button' => $current, 'title' => "Student Add", 'student_active' => 'active'];
             View::render('base.html', $student);
             break;
