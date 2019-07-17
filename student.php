@@ -1,9 +1,9 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 $current = '<span class="sr-only">(current)';
+session_start();
 
-
-if (!empty($_GET)) {
+if (!empty($_GET) && $_SESSION['role']=='Student') {
     switch ($_GET['page']) {
        
         
