@@ -4,8 +4,8 @@ $current = '<span class="sr-only">(current)';
 // Add students in database
 
 // Add user in database
-
-if (!empty($_GET)){//} && $_SESSION['role']=='Staff') {
+session_start();
+if (!empty($_GET) && $_SESSION['role']=='Staff') {
     switch ($_GET['page']) {
         case 'user_list':
             /*$content = file_get_contents("templates/user_list.html");

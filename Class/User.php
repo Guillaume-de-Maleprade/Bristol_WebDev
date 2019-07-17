@@ -51,7 +51,7 @@ class User
 
     // GETTER
     public function getRole(){
-        return getRoleFromIndex($this->role);
+        return self::getRoleFromIndex($this->role);
     }
 
 
@@ -65,12 +65,12 @@ class User
         if ($array == false) {
             exit("Error PDO:query($query)");
         }
-        $stArray = [];
-        foreach ($array as $object) {
-            $user = new User($object['mail'], $object['name'], $object['firstname'], $object['address'], $object['username'], $object['role'],  $object['password'],  $object['id']);
-            array_push($stArray, $user);
-        }
-        return $stArray;
+        
+        $object = $array->fetchObject();
+
+        $user = new User($object->mail, $object->name, $object->firstname, $object->address, $object->username, $object->role,  $object->password,  $object->id);
+
+        return $user;
     }
 
     public static function readAll($role)
@@ -105,22 +105,23 @@ class User
     {
         $db = $GLOBALS['db'];
         $query = "SELECT name FROM role WHERE id = $id ";
-        $array = $db->query($query);
-        if ($array == false) {
+        $res = $db->query($query);
+        if ($res == false) {
             exit("Error PDO:query($query)");
         }
-        return $array[0]['name'];
+        $object = $res->fetchObject();
+        return $object->name;
     }
 
     public static function getIndexFromRole($role)
     {
         $db = $GLOBALS['db'];
         $query = "SELECT id FROM role WHERE name = $role";
-        $array = $db->query($query);
-        if ($array == false) {
+        $res = $db->query($query);
+        if ($res == false) {
             exit("Error PDO:query($query)");
         }
-        return $array[0]['name'];
+        return $res->name;
     }
 
     public static function readByNames($firstname, $name)
