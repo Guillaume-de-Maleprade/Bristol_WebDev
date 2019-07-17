@@ -35,7 +35,7 @@ class User
             $query = "INSERT INTO user (username, mail, name, firstname, address, role, password) VALUES (?,?,?,?,?,?,?)";
             $stmt = $db->prepare($query);
             $stmt->execute([$this->username, $this->mail, $this->name, $this->firstname, $this->address, $this->role, $this->password]);
-            file_put_contents($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/logs/password.txt', $username.' - '.$password . PHP_EOL, FILE_APPEND | LOCK_EX);
+            file_put_contents($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/logs/password.txt', $this->username.' - '.$password . PHP_EOL, FILE_APPEND | LOCK_EX);
         } catch (PDOException $e) {
             die($e);
         }
