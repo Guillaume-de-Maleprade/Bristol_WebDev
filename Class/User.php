@@ -81,6 +81,28 @@ class User
         return self::readAll("Staff");
     }
 
+    public static function getRoleFromIndex($id)
+    {
+        $db = $GLOBALS['db'];
+        $query = "SELECT name FROM role WHERE id = $id ";
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
+        }
+        return $array[0]['name'];
+    }
+
+    public static function getIndexFromRole($role)
+    {
+        $db = $GLOBALS['db'];
+        $query = "SELECT id FROM role WHERE name = $role";
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
+        }
+        return $array[0]['name'];
+    }
+
     public static function readByNames($firstname, $name)
     {
         $db = $GLOBALS['db'];
