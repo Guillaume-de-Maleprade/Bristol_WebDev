@@ -16,6 +16,13 @@ class Login
         $this->role = $role;
     }
 
+    //CREATE PASSWORD
+    public function newPassword($password)
+    {
+        $password=substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(8/strlen($x)) )),1,8);
+        $this->password = $password;
+    }
+
     // CREATE
     public function insert()
     {
