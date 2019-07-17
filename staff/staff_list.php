@@ -9,6 +9,7 @@ $stArray = Staff::readAll();
 $content = "";
 
 foreach($stArray as $staff){
+    myLog("staff list\nusername=$staff->username\nmail=$staff->mail\nname=$staff->name\nfirstname=$staff->firstname");
     $row = View::getTemplate('staff/staff_row.html', [
         'firstname'=>$staff->firstname,
         'name'=>$staff->name,

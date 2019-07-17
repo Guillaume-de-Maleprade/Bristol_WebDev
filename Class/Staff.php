@@ -1,6 +1,19 @@
 <?php
 
-require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/config/db_connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/config/db_connect.php');
+
+
+function addComponentToModule($moduleID, $name, $percentage, $type)
+{
+    if (is_numeric($percentage) && $percentage >= 0 && $percentage <= 100)
+    {
+        // ajout uniquement si
+        $query = "INSERT INTO component VALUES ($moduleID, $name, $percentage, $type)";
+    }
+    else {
+        // PANIC
+    }
+}
 
 class Staff
 {
@@ -9,7 +22,7 @@ class Staff
     public $name;
     public $firstname;
 
-    public function __construct($mail, $name, $firstname, $username)
+    public function __construct($username, $mail, $name, $firstname)
     {
         $this->username = $username;
         $this->mail = $mail;
@@ -20,10 +33,14 @@ class Staff
     // CREATE
     public function insert()
     {
+        myLog("username=$this->username\nmail=$this->mail\nname=$this->name\nfirstname=$this->firstname");
         $db = $GLOBALS['db'];
         $query = "INSERT INTO staff (username,mail,name,firstname) VALUES (?,?,?,?)";
         $req = $db->prepare($query);
-        $req->execute([$this->username, $this->mail, $this->name, $this->firstname]);
+        if ($req->execute([$this->username, $this->mail, $this->name, $this->firstname]) === TRUE){
+            myLog("Staff member created");
+        }
+        else myLog("Failed to insert staff member");
     }
     // READ
     public static function readByUserName($username)
@@ -52,7 +69,7 @@ class Staff
         }
         $stArray = [];
         foreach($array as $object) {
-            $staff = new Staff($object['mail'], $object['name'], $object['firstname'], $object['username']);
+            $staff = new Staff($object['username'], $object['mail'], $object['name'], $object['firstname']);
             array_push($stArray, $staff);
         }
         return $stArray;
@@ -74,4 +91,22 @@ class Staff
             echo("Staff deleted");
         }
     }
+
+    public function createModule($moduleName)
+    {
+        /*
+         * 1. create module
+         * 2. add entry in the teaching table
+         */
+        $query = "INSERT into module VALUES ($moduleName)";
+        if ($db->exec($query) === true){
+            $moduleRes = $db->$query("SELECT * INTO module WHERE titre=$moduleName");
+            if ($moduleRes == false) exit("erreur PDO query : $query");
+            $module = $moduleRes->fetchObject();
+            $db->exec("INSERT INTO teaching VALUES ($module->id, $this->username)");
+        }
+
+    }
+
+
 }
