@@ -1,9 +1,18 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
+$current = '<span class="sr-only">(current)';
 
-require_once('View.php');
 
-$content = require_once('templates/student.html')
+if (!empty($_GET)) {
+    switch ($_GET['page']) {
+        case 'mark_list':
+            header('Location: staff/staff_list.php');
+            break;
 
-$array = ['title'=>'Student Page','content'=>$content];
-
-View::render('templates/base.html', $array);
+        default:
+            View::render('base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
+            break;
+    }
+} else {
+    View::render('templates/base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
+}
