@@ -7,7 +7,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/Student.php');
 
 print_r($_POST);
 
-if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address'])){
+if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address']) && $_SESSION['role']=='Staff'){
 
     $name = htmlspecialchars($_POST['name']);
     $firstname = htmlspecialchars($_POST['firstname']);
@@ -29,4 +29,6 @@ if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address'
     $student = new Student($mail, $name, $firstname, $address, $username);
     $student->insert();
 
+}else{
+    header('Location: /Bristol_WebDev');
 }

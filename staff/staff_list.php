@@ -3,10 +3,11 @@
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/Staff.php');
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
+if($_SESSION['role']=='Staff') {
 
-$stArray = Staff::readAll();
+    $stArray = Staff::readAll();
 
-$content = "";
+    $content = "";
 
 foreach($stArray as $staff){
     myLog("staff list\nusername=$staff->username\nmail=$staff->mail\nname=$staff->name\nfirstname=$staff->firstname");
@@ -19,11 +20,14 @@ foreach($stArray as $staff){
     $content .= $row;
 }
 
-$content = View::getTemplate('staff/staff_list.html', [ 'content'=> $content ]);
+    $content = View::getTemplate('staff/staff_list.html', ['content' => $content]);
 
-$add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/staff.php?page=staff_add'>Add</a>";
-$content .= $add_link;
+    $add_link = "<a class=\"btn btn-primary\" href='/Bristol_WebDev/staff.php?page=staff_add'>Add</a>";
+    $content .= $add_link;
 
-$staffs = ['content' => $content, 'staff_button' => '<span class="sr-only">(current)', 'title' => "Staff List", 'staff_active' => 'active'];
+    $staffs = ['content' => $content, 'staff_button' => '<span class="sr-only">(current)', 'title' => "Staff List", 'staff_active' => 'active'];
 
-View::render('base.html', $staffs);
+    View::render('base.html', $staffs);
+}else{
+    header('Location: /Bristol_WebDev');
+}
