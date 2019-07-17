@@ -9,7 +9,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/tools/logger.php');
 $stArray = Mark::readMarkByUserName('ayme2612');
 
 $content = "";
-
+if(!empty($stArray)){
 foreach($stArray as $mark){
     $marks='';
     foreach($mark->assetsmark as $mark1){
@@ -22,7 +22,7 @@ foreach($stArray as $mark){
     // myLog($row);
     $content .= $row;
 }
-
+}
 $content = View::getTemplate('student/mark_list.html', [ 'content'=> $content ]);
 
 

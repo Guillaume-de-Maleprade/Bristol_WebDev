@@ -18,7 +18,8 @@ class Mark{
     {
         $db = $GLOBALS['db'];
         $username = $db->quote($username);
-        $query = "SELECT module, component, mark FROM component, marking  WHERE id=component and student = $username";
+        $query = "SELECT module.title as module, component.name as component, mark FROM component, marking, people, module 
+        WHERE module.id=module and component.id=component and student =people.id and people.username=$username";
         $array = $db->query($query);
         if ($array == false) {
             exit("Error PDO:query($query)");

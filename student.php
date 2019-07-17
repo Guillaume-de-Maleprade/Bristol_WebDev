@@ -5,9 +5,8 @@ $current = '<span class="sr-only">(current)';
 
 if (!empty($_GET)) {
     switch ($_GET['page']) {
-        case 'mark_list':
-            header('Location: staff/staff_list.php');
-            break;
+       
+        
 
         default:
             View::render('base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
