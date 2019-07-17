@@ -22,6 +22,7 @@ if(isset($_POST['name']) && isset($_POST['firstname'])){
     $mail = $username."@uwe.ac.uk";
     myLog("mail: $mail");
     $staff = new Staff($username, $mail, $name, $firstname);
+    $staff = new Staff();
     $staff->insert();
 
 }
