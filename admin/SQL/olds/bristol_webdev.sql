@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 13 juil. 2019 à 18:41
+-- Généré le :  mer. 17 juil. 2019 à 13:04
 -- Version du serveur :  10.3.15-MariaDB
 -- Version de PHP :  7.3.6
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `webdev_bristol`
+-- Base de données :  `bristol_webdev`
 --
 
 -- --------------------------------------------------------
@@ -32,8 +32,8 @@ CREATE TABLE `component` (
   `id` int(11) NOT NULL,
   `module` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `percentage` int(6) NOT NULL,
-  `type` varchar(30) NOT NULL
+  `percentage` int(11) NOT NULL,
+  `type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -43,9 +43,10 @@ CREATE TABLE `component` (
 --
 
 CREATE TABLE `enrollment` (
-  `student` varchar(60) NOT NULL,
+  `id` int(11) NOT NULL,
+  `student` int(11) NOT NULL,
   `module` int(11) NOT NULL,
-  `mark` int(11) NOT NULL
+  `mark` decimal(10,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -55,9 +56,10 @@ CREATE TABLE `enrollment` (
 --
 
 CREATE TABLE `login` (
-  `username` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(60) CHARACTER SET utf8 NOT NULL,
-  `role` varchar(30) CHARACTER SET utf8 NOT NULL
+  `id` int(11) NOT NULL,
+  `username` varchar(60) NOT NULL,
+  `password` varchar(60) NOT NULL,
+  `role` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -67,7 +69,8 @@ CREATE TABLE `login` (
 --
 
 CREATE TABLE `marking` (
-  `student` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `id` int(11) NOT NULL,
+  `student` int(11) NOT NULL,
   `component` int(11) NOT NULL,
   `mark` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -80,7 +83,7 @@ CREATE TABLE `marking` (
 
 CREATE TABLE `module` (
   `id` int(11) NOT NULL,
-  `title` varchar(60) NOT NULL
+  `title` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -90,7 +93,8 @@ CREATE TABLE `module` (
 --
 
 CREATE TABLE `role` (
-  `name` varchar(30) CHARACTER SET utf8 NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -101,16 +105,17 @@ CREATE TABLE `role` (
 
 CREATE TABLE `room` (
   `id` int(11) NOT NULL,
-  `seat_number` int(11) NOT NULL
+  `number` int(11) UNSIGNED NOT NULL,
+  `nb_seat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `room exam booking`
+-- Structure de la table `room_booking`
 --
 
-CREATE TABLE `room exam booking` (
+CREATE TABLE `room_booking` (
   `date` date NOT NULL,
   `room` int(11) NOT NULL,
   `component` int(11) NOT NULL
@@ -123,10 +128,11 @@ CREATE TABLE `room exam booking` (
 --
 
 CREATE TABLE `staff` (
-  `username` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `mail` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `name` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `firstname` varchar(30) CHARACTER SET utf8 NOT NULL
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `mail` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `firstname` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -136,8 +142,9 @@ CREATE TABLE `staff` (
 --
 
 CREATE TABLE `student` (
-  `username` varchar(60) NOT NULL,
-  `mail` varchar(80) NOT NULL,
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `mail` varchar(60) NOT NULL,
   `name` varchar(30) NOT NULL,
   `firstname` varchar(30) NOT NULL,
   `address` varchar(60) NOT NULL
@@ -150,8 +157,9 @@ CREATE TABLE `student` (
 --
 
 CREATE TABLE `teaching` (
+  `id` int(11) NOT NULL,
   `module` int(11) NOT NULL,
-  `staff` varchar(30) NOT NULL
+  `staff` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -161,7 +169,8 @@ CREATE TABLE `teaching` (
 --
 
 CREATE TABLE `type` (
-  `name` varchar(30) CHARACTER SET utf8 NOT NULL
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -173,42 +182,44 @@ CREATE TABLE `type` (
 --
 ALTER TABLE `component`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`),
-  ADD KEY `type` (`type`),
-  ADD KEY `module` (`module`);
+  ADD KEY `component_module` (`module`),
+  ADD KEY `component_type` (`type`);
 
 --
 -- Index pour la table `enrollment`
 --
 ALTER TABLE `enrollment`
-  ADD PRIMARY KEY (`student`,`module`),
-  ADD KEY `module3` (`module`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `enrollment_module` (`module`),
+  ADD KEY `enrollment_student` (`student`);
 
 --
 -- Index pour la table `login`
 --
 ALTER TABLE `login`
-  ADD PRIMARY KEY (`username`),
-  ADD KEY `role` (`role`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `login_role` (`role`);
 
 --
 -- Index pour la table `marking`
 --
 ALTER TABLE `marking`
-  ADD PRIMARY KEY (`student`,`component`),
-  ADD KEY `component2` (`component`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `marking_student` (`student`),
+  ADD KEY `marking_component` (`component`);
 
 --
 -- Index pour la table `module`
 --
 ALTER TABLE `module`
-  ADD PRIMARY KEY (`id`,`title`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `module_title` (`title`);
 
 --
 -- Index pour la table `role`
 --
 ALTER TABLE `role`
-  ADD PRIMARY KEY (`name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `room`
@@ -217,39 +228,42 @@ ALTER TABLE `room`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `room exam booking`
+-- Index pour la table `room_booking`
 --
-ALTER TABLE `room exam booking`
+ALTER TABLE `room_booking`
   ADD PRIMARY KEY (`date`,`room`),
-  ADD KEY `component` (`component`),
-  ADD KEY `room exam booking_ibfk_1` (`room`);
+  ADD KEY `book_room` (`room`),
+  ADD KEY `book_component` (`component`);
 
 --
 -- Index pour la table `staff`
 --
 ALTER TABLE `staff`
-  ADD PRIMARY KEY (`username`),
-  ADD UNIQUE KEY `mail` (`mail`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `staff_username` (`username`),
+  ADD UNIQUE KEY `staff_mail` (`mail`);
 
 --
 -- Index pour la table `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`username`),
-  ADD UNIQUE KEY `mail` (`mail`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `student_username` (`username`),
+  ADD UNIQUE KEY `student_mail` (`mail`);
 
 --
 -- Index pour la table `teaching`
 --
 ALTER TABLE `teaching`
-  ADD PRIMARY KEY (`module`,`staff`),
-  ADD KEY `staff` (`staff`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `teaching_module` (`module`),
+  ADD KEY `teaching_staff` (`staff`);
 
 --
 -- Index pour la table `type`
 --
 ALTER TABLE `type`
-  ADD PRIMARY KEY (`name`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -262,15 +276,63 @@ ALTER TABLE `component`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `enrollment`
+--
+ALTER TABLE `enrollment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `login`
+--
+ALTER TABLE `login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `marking`
+--
+ALTER TABLE `marking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `module`
 --
 ALTER TABLE `module`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `room`
 --
 ALTER TABLE `room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `student`
+--
+ALTER TABLE `student`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `teaching`
+--
+ALTER TABLE `teaching`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `type`
+--
+ALTER TABLE `type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -281,43 +343,42 @@ ALTER TABLE `room`
 -- Contraintes pour la table `component`
 --
 ALTER TABLE `component`
-  ADD CONSTRAINT `module2` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `type` FOREIGN KEY (`type`) REFERENCES `type` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `component_module` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `component_type` FOREIGN KEY (`type`) REFERENCES `type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `enrollment`
 --
 ALTER TABLE `enrollment`
-  ADD CONSTRAINT `module3` FOREIGN KEY (`module`) REFERENCES `module` (`id`),
-  ADD CONSTRAINT `student` FOREIGN KEY (`student`) REFERENCES `student` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `enrollment_module` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `enrollment_student` FOREIGN KEY (`student`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `login`
 --
 ALTER TABLE `login`
-  ADD CONSTRAINT `role` FOREIGN KEY (`role`) REFERENCES `role` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `student` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `login_role` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `marking`
 --
 ALTER TABLE `marking`
-  ADD CONSTRAINT `component2` FOREIGN KEY (`component`) REFERENCES `component` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student2` FOREIGN KEY (`student`) REFERENCES `student` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `marking_component` FOREIGN KEY (`component`) REFERENCES `component` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `marking_student` FOREIGN KEY (`student`) REFERENCES `student` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `room exam booking`
+-- Contraintes pour la table `room_booking`
 --
-ALTER TABLE `room exam booking`
-  ADD CONSTRAINT `component` FOREIGN KEY (`component`) REFERENCES `component` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `room exam booking_ibfk_1` FOREIGN KEY (`room`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `room_booking`
+  ADD CONSTRAINT `book_component` FOREIGN KEY (`component`) REFERENCES `component` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `book_room` FOREIGN KEY (`room`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `teaching`
 --
 ALTER TABLE `teaching`
-  ADD CONSTRAINT `module` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `staff` FOREIGN KEY (`staff`) REFERENCES `staff` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `teaching_module` FOREIGN KEY (`module`) REFERENCES `module` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `teaching_staff` FOREIGN KEY (`staff`) REFERENCES `staff` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
