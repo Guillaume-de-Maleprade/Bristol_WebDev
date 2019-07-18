@@ -7,6 +7,7 @@
 */
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/User.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/tools/logger.php');
 
 /*
 *Réaction en fonction des données reçues.
@@ -18,19 +19,22 @@ if(User::readByUserName(htmlspecialchars($_POST["login"]))){
 	$User=User::readByUserName(htmlspecialchars($_POST["login"]));
 
 	//Si le password associé au pseudo est correct ? Avec protection par htmlspecialchars.
-	if(password_verify(htmlspecialchars($_POST["password"]),$User->password)){
+	echo $User->password;
+    if(password_verify(htmlspecialchars($_POST["password"]), $User->password)){
 
 		session_start();
 		//Si le pseudo est correct alors connexion, assignation des valeurs de $_SESSION['username'] ainsi que $_SESSION['role']. Enfin redirection
 		$_SESSION['username']=$User->username;
-  		$_SESSION['role']=$User->getRole();
+  		$role = $User->getRole();
+        $_SESSION['role'] = $role;
 
-        switch ($_SESSION['role']){
+        switch ($role){
             case 'Staff':
-                header("Location: staff.php");
+                header("Location: /Bristol_WebDev/user.php?page=user_add");
+                break;
             case 'Student':
-                header("Location: student.php");
-
+                header("Location: /Bristol_WebDev/student.php");
+                break;
         }
 
 		exit;
