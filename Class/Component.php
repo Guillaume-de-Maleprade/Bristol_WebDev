@@ -6,13 +6,10 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/config/db_connect.php');
 class Component{ 
 
     public $component;
-    public $date;
-    public $room;
-    
-    public function __construct($component, $date,$room ){
+
+    public function __construct($component){
         $this->component = $component;
-        $this->date = $date;
-        $this->room = $room;
+ 
         
 
     }
@@ -31,7 +28,7 @@ class Component{
         $stArray = [];
 
         foreach($array as $object) {
-            $markOb = new Component($object['component'], $object['date'],$object['room']);
+            $markOb = array("component"=>$object['component'], "date"=>$object['date'],"room"=>$object['room']);
             array_push($stArray, $markOb);     
         
         

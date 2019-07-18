@@ -10,23 +10,24 @@ $stArray = User::readMarkByUserName('ayme2612');
 
 $content = "";
 if(!empty($stArray)){
+    $avg=0;
     
-   
 foreach($stArray as $mark){
-    $markf="";
+
     foreach($mark["assetsmark"] as $marks){
-    $markf.=implode(" : ",$marks) . "%<br>";
+        $avg+=$marks["mark"]*$marks["percent"]/100;
+        }
+
     
-    }
-    
-    $row = View::getTemplate('student/mark_row.html', [
+    $row = View::getTemplate('student/module_row.html', [
         'module'=>$mark["module"],
-        'assetsmark'=>$markf,
+        'avg'=>$avg,
     ]);
+    // myLog($row);
     $content .= $row;
 }
 }
-$content = View::getTemplate('student/mark_list.html', [ 'content'=> $content ]);
+$content = View::getTemplate('student/module_list.html', [ 'content'=> $content ]);
 
 
 $mark = ['content' => $content, 'student_button' => '<span class="sr-only">(current)', 'title' => "Student List", 'student_active' => 'active'];

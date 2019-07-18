@@ -13,9 +13,9 @@ if(!empty($stArray)){
 foreach($stArray as $component){
     
     $row = View::getTemplate('student/component_row.html', [
-        'component'=>$component->component,
-        'date'=>$component->date,
-        'room'=>$component->room,
+        'component'=>$component["component"],
+        'date'=>$component["date"],
+        'room'=>$component["room"],
     ]);
     // myLog($row);
     $content .= $row;
@@ -26,4 +26,4 @@ $content = View::getTemplate('student/component_list.html', [ 'content'=> $conte
 
 $mark = ['content' => $content, 'student_button' => '<span class="sr-only">(current)', 'title' => "Student List", 'student_active' => 'active'];
 
-View::render('base.html', $mark);
+View::render('student/base.html', $mark);

@@ -1,2 +1,5 @@
 .idea
 admin/.htaccess
+admin/internal_tools
+logs
+logs.txt
