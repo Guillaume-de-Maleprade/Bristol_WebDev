@@ -33,7 +33,7 @@ if(User::readByUserName(htmlspecialchars($_POST["login"]))){
                 header("Location: /Bristol_WebDev/user.php?page=user_add");
                 break;
             case 'Student':
-                header("Location: /Bristol_WebDev/student.php");
+                header("Location: /Bristol_WebDev/student.php?page=mark_list");
                 break;
         }
 

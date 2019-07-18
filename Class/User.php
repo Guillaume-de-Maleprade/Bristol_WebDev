@@ -160,4 +160,66 @@ class User
         $query = "DELETE FROM people WHERE username = $username";
         $db->exec($query);
     }
+
+
+    // READ mark by student
+    public static function readMarkByUserName($username)
+    {
+        $db = $GLOBALS['db'];
+        $username = $db->quote($username);
+        $query = "SELECT module.title as module, component.name as component, component.percentage as percent, mark FROM component, marking, people, module 
+        WHERE module.id=module and component.id=component and student =people.id and people.username=$username";
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
+        }
+        $stArray = [];
+        $i=0;
+        foreach($array as $object) {
+            $markOb="";
+            $it=0;
+            foreach($stArray as $obj){
+
+                if($obj["module"]==$object['module']){
+                    $markOb= array("component"=>$object['component'],"mark"=>$object['mark'],"percent"=>$object['percent']);
+                    array_push($stArray[$it]["assetsmark"], $markOb );
+                   
+                    
+                }
+                $it+=1;
+            }
+                
+              if($markOb=='') { 
+            {
+            $markOb = array("module"=>$object['module'], "assetsmark"=>(array(array("component"=>$object['component'],"mark"=>$object['mark'],"percent"=>$object['percent']))));
+            array_push($stArray, $markOb);
+            $i+=1;
+            }
+            }
+        }
+        
+
+        return $stArray;
+    }
+    public static function readComponentByUserName($username)
+    {
+        $db = $GLOBALS['db'];
+        $username = $db->quote($username);
+        $query = "SELECT component.name as component, room_booking.date as date, room.number as room FROM component, room_booking, room, module, enrollment, people
+        WHERE module.id=enrollment.module and component.id=enrollment.module and student=people.id and room_booking.component=component.id and
+        room.id=room_booking.room and people.username=$username";
+        $array = $db->query($query);
+        if ($array == false) {
+            exit("Error PDO:query($query)");
+        }
+        $stArray = [];
+
+        foreach($array as $object) {
+            $markOb = array("component"=>$object['component'], "date"=>$object['date'],"room"=>$object['room']);
+            array_push($stArray, $markOb);
+
+
+
+            return $stArray;}
+    }
 }

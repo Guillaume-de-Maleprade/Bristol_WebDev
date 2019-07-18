@@ -1,4 +1,6 @@
 <?php
+
+
 class View{
     static function render($templatePath, $array){
         echo self::getTemplate($templatePath, $array);
