@@ -15,7 +15,16 @@ if (!empty($_GET) && $_SESSION['role']=='Staff') {
             break;
 
         case 'user_add':
-            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/user_add.html");
+            //$content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/user_add.html");
+            if(isset($_GET['success'])){
+                if($_GET['success']=='1'){
+                    $content = View::getTemplate('staff/user_add.html',['success'=>'User successfully added!','style'=>'text-success']);
+                }else{
+                    $content = View::getTemplate('staff/user_add.html',['success'=>'An error has occured!','style'=>'text-danger']);
+                }
+            }else{
+                $content = View::getTemplate('staff/user_add.html',[]);
+            }
             $user = ['content' => $content, 'user_button' => $current, 'title' => "User Add", 'add_active' => 'active'];
             View::render('base.html', $user);
             break;

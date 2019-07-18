@@ -4,8 +4,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/tools/logger.php');
 
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/User.php');
 
-
-print_r($_POST);
+session_start();
 
 if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address']) && isset($_POST['role']) && $_SESSION['role']=='Staff'){
 
@@ -21,7 +20,7 @@ if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address'
     $username = strtolower($username);
 
     $i = "";
-    while(Student::readByUserName($username . $i)!= NULL){
+    while(User::readByUserName($username . $i)!= NULL){
         if(strlen($i)<1) $i = 0;
         $i++;
     }
@@ -30,8 +29,8 @@ if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address'
     $mail = $username."@uwe.ac.uk";
     myLog("mail: $mail");
     $student = new User($mail, $name, $firstname, $address, $username, $roleID);
-    $student->insert();
-
+    $success = $student->insert();
+    header("Location: /Bristol_WebDev/user.php?page=user_add&success=$success");
 }else{
     header('Location: /Bristol_WebDev');
 }
