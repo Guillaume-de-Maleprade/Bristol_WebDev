@@ -27,10 +27,10 @@ if(isset($_GET['student']) && $_SESSION['role'] == 'Staff'){
             $moduleForm = View::getTemplate('staff/mark_component_form.html', ['rows'=>$rows]);
             View::render('base.html', ['title'=>'Marking component', 'content'=>$moduleForm]);
         }else {
-            //header('Location: /Bristol_WebDev/staff/user_list.php?role=Student');
+            header('Location: /Bristol_WebDev/staff/user_list.php?role=Student');
         }
     //}
 
 }else{
-    //header('Location: /Bristol_WebDev/staff/user_list.php?role=Student');
+    header('Location: /Bristol_WebDev/staff/user_list.php?role=Student');
 }
