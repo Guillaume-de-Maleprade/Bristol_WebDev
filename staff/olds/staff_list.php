@@ -3,9 +3,9 @@
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/Staff.php');
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
-if($_SESSION['role']=='Staff') {
+if($_SESSION['role']== 'Component') {
 
-    $stArray = Staff::readAll();
+    $stArray = Component::readAll();
 
     $content = "";
 

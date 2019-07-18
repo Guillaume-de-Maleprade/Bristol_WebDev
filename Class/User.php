@@ -68,7 +68,6 @@ class User
         }
         $object = $res->fetchObject();
         if($object == NULL) return NULL;
-        print_r($object);
 
         $user = new User($object->mail, $object->name, $object->firstname, $object->address, $object->username, $object->role,  $object->password,  $object->id);
 

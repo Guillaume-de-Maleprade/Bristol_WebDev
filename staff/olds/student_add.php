@@ -7,7 +7,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/Student.php');
 
 print_r($_POST);
 
-if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address']) && $_SESSION['role']=='Staff'){
+if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address']) && $_SESSION['role']== 'Component'){
 
     $name = htmlspecialchars($_POST['name']);
     $firstname = htmlspecialchars($_POST['firstname']);
@@ -18,7 +18,7 @@ if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address'
     $username = strtolower($username);
 
     $i = "";
-    while(Student::readByUserName($username . $i)!= NULL){
+    while(Module::readByStudentUserName($username . $i)!= NULL){
         if(strlen($i)<1) $i = 0;
         $i++;
     }
@@ -26,7 +26,7 @@ if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address'
     $username .= $i;
     $mail = $username."@uwe.ac.uk";
     myLog("mail: $mail");
-    $student = new Student($mail, $name, $firstname, $address, $username);
+    $student = new Module($mail, $name, $firstname, $address, $username);
     $student->insert();
 
 }else{
