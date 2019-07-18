@@ -4,7 +4,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/User.php');
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
 $stArray = [];
-
+$role = "";
 if(isset($_GET['role'])){
     $role = User::getIndexFromRole(htmlspecialchars($_GET['role']));
     $stArray = User::readAll($role);
@@ -19,13 +19,18 @@ if(isset($_GET['role'])){
 $content = "";
 
 foreach($stArray as $user){
+    $role = User::getRoleFromIndex($user->role);
+    $username = $user->username;
+    if($role=="Student"){
+        $username = "<a href='/Bristol_WebDev/staff/student_manage.php?student=$username'>$username</a>";
+    }
     $row = View::getTemplate('staff/user_row.html', [
         'firstname'=>$user->firstname,
         'name'=>$user->name,
-        'username'=>$user->username,
+        'username'=>$username,
         'mail'=>$user->mail,
         'address'=>$user->address,
-        'role'=>User::getRoleFromIndex($user->role)
+        'role'=>$role
     ]);
     $content .= $row;
 }

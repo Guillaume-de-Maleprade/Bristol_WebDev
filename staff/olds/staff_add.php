@@ -13,7 +13,7 @@ if(isset($_POST['name']) && isset($_POST['firstname'])){
     $username = str_replace(" ", "-", $name ).".". $firstname;
     $username = strtolower($username);
     $i = "";
-    while(Staff::readByUserName($username . $i)!= NULL){
+    while(Component::readByUserName($username . $i)!= NULL){
         if(strlen($i)<1) $i = 0;
         $i++;
     }
@@ -21,8 +21,8 @@ if(isset($_POST['name']) && isset($_POST['firstname'])){
     $username .= $i;
     $mail = $username."@uwe.ac.uk";
     myLog("mail: $mail");
-    $staff = new Staff($username, $mail, $name, $firstname);
-    $staff = new Staff();
+    $staff = new Component($username, $mail, $name, $firstname);
+    $staff = new Component();
     $staff->insert();
 
 }

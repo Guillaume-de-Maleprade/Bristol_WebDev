@@ -6,7 +6,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/User.php');
 
 session_start();
 
-if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address']) && isset($_POST['role']) && $_SESSION['role']=='Staff'){
+if(isset($_POST['name']) && isset($_POST['firstname']) && isset($_POST['address']) && isset($_POST['role']) && $_SESSION['role']== 'Staff'){
 
     $name = htmlspecialchars($_POST['name']);
     $firstname = htmlspecialchars($_POST['firstname']);

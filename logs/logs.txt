@@ -7,3 +7,5 @@ username: jimenez.clement
 mail: jimenez.clement@uwe.ac.uk
 username: gonnot.cesar
 mail: gonnot.cesar@uwe.ac.uk
+username: corn.adrien
+mail: corn.adrien@uwe.ac.uk

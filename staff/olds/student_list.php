@@ -4,7 +4,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/Class/Student.php');
 require($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/View.php');
 
 
-$stArray = Student::readAll();
+$stArray = Module::readAll();
 
 $content = "";
 
