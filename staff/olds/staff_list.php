@@ -9,15 +9,16 @@ if($_SESSION['role']== 'Component') {
 
     $content = "";
 
-    foreach ($stArray as $staff) {
-        $row = View::getTemplate('staff/staff_row.html', [
-            'firstname' => $staff->firstname,
-            'name' => $staff->name,
-            'username' => $staff->username,
-            'mail' => $staff->mail
-        ]);
-        $content .= $row;
-    }
+foreach($stArray as $staff){
+    myLog("staff list\nusername=$staff->username\nmail=$staff->mail\nname=$staff->name\nfirstname=$staff->firstname");
+    $row = View::getTemplate('staff/staff_row.html', [
+        'firstname'=>$staff->firstname,
+        'name'=>$staff->name,
+        'username'=>$staff->username,
+        'mail'=>$staff->mail
+    ]);
+    $content .= $row;
+}
 
     $content = View::getTemplate('staff/staff_list.html', ['content' => $content]);
 
