@@ -33,6 +33,24 @@ if (!empty($_GET) && $_SESSION['role']=='Staff') {
             View::render('base.html', $student);
             break;
 
+        case 'module_add':
+            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/module_add.html");
+            $module = ['content' => $content, 'module_button' => $current, 'title' => "Module Add", 'staff_active' => 'active'];
+            View::render('base.html', $module);
+            break;
+
+        case 'component_list':
+            $id = $_GET['id'];
+            header('Location: staff/component_list.php?id='.$id);
+            break;
+
+        case 'component_add':
+            $id = $_GET['id'];
+            $content = file_get_contents($_SERVER['DOCUMENT_ROOT']."/Bristol_WebDev/templates/staff/staff_add.html");
+            $component = ['content'=>$content, 'component_button'=>$current, 'title'=>"Add Component", 'staff_active'=>'active'];
+            View::render('base.html', $component);
+            break;
+
         default:
             View::render('base.html', ['content' => "<h1> Admin page </h1>", 'title' => "Admin Page", 'home_active' => 'active']);
             break;

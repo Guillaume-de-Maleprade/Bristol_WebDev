@@ -3,18 +3,6 @@
 require_once($_SERVER['DOCUMENT_ROOT'].'/Bristol_WebDev/config/db_connect.php');
 
 
-function addComponentToModule($moduleID, $name, $percentage, $type)
-{
-    if (is_numeric($percentage) && $percentage >= 0 && $percentage <= 100)
-    {
-        // ajout uniquement si
-        $query = "INSERT INTO component VALUES ($moduleID, $name, $percentage, $type)";
-    }
-    else {
-        // PANIC
-    }
-}
-
 class Staff
 {
     public $username;
@@ -74,7 +62,6 @@ class Staff
         }
         return $stArray;
     }
-
     // UPDATE
     public function update(){
 
@@ -91,22 +78,4 @@ class Staff
             echo("Staff deleted");
         }
     }
-
-    public function createModule($moduleName)
-    {
-        /*
-         * 1. create module
-         * 2. add entry in the teaching table
-         */
-        $query = "INSERT into module VALUES ($moduleName)";
-        if ($db->exec($query) === true){
-            $moduleRes = $db->$query("SELECT * INTO module WHERE titre=$moduleName");
-            if ($moduleRes == false) exit("erreur PDO query : $query");
-            $module = $moduleRes->fetchObject();
-            $db->exec("INSERT INTO teaching VALUES ($module->id, $this->username)");
-        }
-
-    }
-
-
 }
